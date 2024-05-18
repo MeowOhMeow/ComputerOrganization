@@ -1,0 +1,4 @@
+SUBI $s4, $zero, -20
+SW $s4, 0($s4)
+LW $s5, 0($s4)
+SLTI $s6, $s5, 0

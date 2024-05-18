@@ -1,0 +1,13 @@
+ADDU $t0, $zero, $zero
+SUBI $t1, $zero, -1
+ADDU $t3, $zero, $zero
+SUBI $t4, $zero, -10
+loop:ADDU $t2, $t0, $t1
+SW $t0, 0($t3)
+ADDU $t0, $t1, $zero
+ADDU $t1, $t2, $zero
+SUBI $t3, $t3, -4
+SUBI $t4, $t4, 1
+BEQ $t4, $zero, end
+J loop
+end:ADDU $v0, $zero, $zero

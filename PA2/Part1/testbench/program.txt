@@ -1,0 +1,4 @@
+ADDU $s4, $fp, $ra
+SUBU $s5, $t5, $t4
+SLL $s6, $t0, 4
+SLLV $s7, $fp, $sp
