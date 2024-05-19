@@ -50,7 +50,7 @@ module DM(
 	reg [7:0]DataMem[0:`DATA_MEM_SIZE - 1];
 
 	// write data to memory
-	always @(negedge clk) begin
+	always @(*) begin
 		if(Mem_w) begin
 			DataMem[Mem_addr[6:0]] <= Mem_w_data[31:24];
 			DataMem[Mem_addr[6:0] + 1] <= Mem_w_data[23:16];

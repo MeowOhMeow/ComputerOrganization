@@ -286,7 +286,7 @@ module FinalCPU(
 		.RegWrite_out(RegWrite_EX2MEM_out),
 		// Inputs
 		.ALU_result(ALU_result),
-		.Rt_data(Rt_data_ID2EX_out),
+		.Rt_data(Forwarding_B_data),
 		.RdAddr(RdAddr_EX),
 		.MemW(MemW_ID2EX_out),
 		.MemR(MemR_ID2EX_out),
