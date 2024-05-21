@@ -55,7 +55,7 @@ module RF(
 	assign RtData = R[RtAddr];
 
 	always @(*) begin
-		if(RegWrite && !clk)
+		if(RegWrite && !clk && RdAddr != 0)
 			R[RdAddr] <= RdData;
 	end
 
