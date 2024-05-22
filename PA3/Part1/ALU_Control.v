@@ -1,8 +1,3 @@
-`define ADDU 6'b001011
-`define SUBU 6'b001101
-`define SLL 6'b100110
-`define SLLV 6'b110110
-
 module ALU_Control(
     // Outputs
     output reg [5:0] funct,
@@ -10,6 +5,10 @@ module ALU_Control(
     input [1:0] ALU_op,
     input [5:0] funct_ctrl
 );
+    parameter ADDU = 6'b001011;
+    parameter SUBU = 6'b001101;
+    parameter SLL = 6'b100110;
+    parameter SLLV = 6'b110110;
 
     always @(*) begin
         case(ALU_op)
@@ -17,10 +16,10 @@ module ALU_Control(
             2'b01: funct = 6'b001010;
             2'b10: begin
                 case(funct_ctrl)
-                    `ADDU: funct = 6'b001001;
-                    `SUBU: funct = 6'b001010;
-                    `SLL: funct = 6'b100001;
-                    `SLLV: funct = 6'b110101;
+                    ADDU: funct = 6'b001001;
+                    SUBU: funct = 6'b001010;
+                    SLL: funct = 6'b100001;
+                    SLLV: funct = 6'b110101;
                     default: funct = 6'b000000;
                 endcase
             end
