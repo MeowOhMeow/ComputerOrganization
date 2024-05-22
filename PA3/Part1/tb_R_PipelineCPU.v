@@ -71,7 +71,7 @@ module tb_R_PipelineCPU;
 	initial
 	begin : Preprocess
 		// Initialize inputs
-		Input_Addr	= 32'dz;
+		Input_Addr	= 32'd0;
 		clk = `LOW;
 
 		// Initialize testbench files
@@ -103,8 +103,6 @@ module tb_R_PipelineCPU;
 	always
 	begin : StimuliProcess
 		// Start testing
-		@(negedge clk);
-		Input_Addr = 0;
 		while (Input_Addr < `INSTR_MAX - 4)
 		begin
 			@(negedge clk);

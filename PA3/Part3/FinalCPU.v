@@ -48,6 +48,7 @@ module FinalCPU(
 	wire [1:0] ALU_op_C;
 	wire [31:0] imm;
 	wire [4:0] RsAddr_ID, RtAddr_ID, RdAddr_ID;
+	wire [4:0] RtAddr_ID_C, RdAddr_ID_C;
 	wire stall_ctrl;
 
 	// EX stage
@@ -111,8 +112,8 @@ module FinalCPU(
 	// ID(WB) stage
 	assign imm = { {16{instr_out[15]}}, instr_out[15:0] };
 	assign RsAddr_ID = instr_out[25:21];
-	assign RtAddr_ID = instr_out[20:16];
-	assign RdAddr_ID = instr_out[15:11];
+	assign RtAddr_ID_C = instr_out[20:16];
+	assign RdAddr_ID_C = instr_out[15:11];
 	assign PC_Write = ~stall_ctrl;
 
 	RF Register_File(
@@ -121,7 +122,7 @@ module FinalCPU(
 		.RtData(Rt_data),
 		// Inputs
 		.RsAddr(RsAddr_ID),
-		.RtAddr(RtAddr_ID),
+		.RtAddr(RtAddr_ID_C),
 		.RdAddr(RdAddr_MEM2WB_out),
 		.RdData(WB_data),
 		.RegWrite(RegWrite_MEM2WB_out),
@@ -135,7 +136,7 @@ module FinalCPU(
 		.Mem_Read(MemR_ID2EX_out),
 		.RtAddr_EX(RtAddr_ID2EX_out),
 		.RsAddr_ID(RsAddr_ID),
-		.RtAddr_ID(RtAddr_ID)
+		.RtAddr_ID(RtAddr_ID_C)
 	);
 
 	Control Control_Unit(
@@ -151,7 +152,7 @@ module FinalCPU(
 		.opcode(instr_out[31:26])
 	);
 
-	Stall_MUX Stall_MUX1(
+	Stall_MUX Stall_MUX_Control(
 		// Outputs
 		.RegDst_out(RegDst),
 		.RegWrite_out(RegWrite),
@@ -169,6 +170,24 @@ module FinalCPU(
 		.Mem_r(MemR_C),
 		.Mem_to_Reg(Mem2Reg_C),
 		.stall_ctrl(stall_ctrl)
+	);
+
+	RegMUX Stall_MUX_Rt(
+		// Outputs
+		.RegDst(RtAddr_ID),
+		// Inputs
+		.addr1(RtAddr_ID_C),
+		.addr2(5'b00000),
+		.RegDst_ctrl(stall_ctrl)
+	);
+
+	RegMUX Stall_MUX_Rd(
+		// Outputs
+		.RegDst(RdAddr_ID),
+		// Inputs
+		.addr1(RdAddr_ID_C),
+		.addr2(5'b00000),
+		.RegDst_ctrl(stall_ctrl)
 	);
 
 	// ID2EX stage
@@ -209,8 +228,8 @@ module FinalCPU(
 		// Outputs
 		.RegDst(RdAddr_EX),
 		// Inputs
-		.Rt(RtAddr_ID2EX_out),
-		.Rd(RdAddr_ID2EX_out),
+		.addr1(RtAddr_ID2EX_out),
+		.addr2(RdAddr_ID2EX_out),
 		.RegDst_ctrl(RegDst_out)
 	);
 
