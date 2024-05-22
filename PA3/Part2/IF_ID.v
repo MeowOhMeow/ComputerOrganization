@@ -9,7 +9,7 @@ module IF_ID (
 
     always @(negedge clk) begin
         if(init == 0) begin
-            instr_out <= 32'bz;
+            instr_out <= 32'bx;
             init <= 1;
         end
         else begin
