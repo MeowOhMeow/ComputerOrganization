@@ -12,19 +12,19 @@ module ALU_Control(
 
     always @(*) begin
         case(ALU_op)
-            2'b00: funct = 6'b001001;
-            2'b01: funct = 6'b001010;
+            2'b00: funct <= 6'b001001;
+            2'b01: funct <= 6'b001010;
             2'b10: begin
                 case(funct_ctrl)
-                    ADDU: funct = 6'b001001;
-                    SUBU: funct = 6'b001010;
-                    SLL: funct = 6'b100001;
-                    SLLV: funct = 6'b110101;
-                    default: funct = 6'b000000;
+                    ADDU: funct <= 6'b001001;
+                    SUBU: funct <= 6'b001010;
+                    SLL: funct <= 6'b100001;
+                    SLLV: funct <= 6'b110101;
+                    default: funct <= 6'b000000;
                 endcase
             end
-            2'b11: funct = 6'b101010;
-            default: funct = 6'b000000;
+            2'b11: funct <= 6'b101010;
+            default: funct <= 6'b000000;
         endcase
     end
 

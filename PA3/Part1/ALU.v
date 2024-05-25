@@ -24,12 +24,12 @@ module ALU(
 
     always @(*) begin
         case(funct)
-            ADDU: ALU_result = ADDU_result;
-            SUBU: ALU_result = SUBU_result;
-            SLL: ALU_result = SLL_result;
-            SLLV: ALU_result = SLLV_result;
-            SLTI: ALU_result = SLTI_result;
-            default: ALU_result = 32'b0;
+            ADDU: ALU_result <= ADDU_result;
+            SUBU: ALU_result <= SUBU_result;
+            SLL: ALU_result <= SLL_result;
+            SLLV: ALU_result <= SLLV_result;
+            SLTI: ALU_result <= SLTI_result;
+            default: ALU_result <= 32'b0;
         endcase
     end
 
